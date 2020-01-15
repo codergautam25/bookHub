@@ -1,19 +1,19 @@
-package com.example.bookhub
+package com.example.bookhub.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.bookhub.*
+import com.example.bookhub.fragment.AboutAppFragment
+import com.example.bookhub.fragment.DashboardFragment
+import com.example.bookhub.fragment.FavouritesFragment
+import com.example.bookhub.fragment.profileFragment
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.android.synthetic.main.main.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var draweLayout:DrawerLayout
@@ -37,7 +37,10 @@ class MainActivity : AppCompatActivity() {
         setUpToolbar()
         openDashboard()
 
-        val actionBarDrawerToggle=ActionBarDrawerToggle(this@MainActivity,draweLayout,R.string.open_drawer,R.string.close_drawer)
+        val actionBarDrawerToggle=ActionBarDrawerToggle(this@MainActivity,draweLayout,
+            R.string.open_drawer,
+            R.string.close_drawer
+        )
 
         draweLayout.addDrawerListener(actionBarDrawerToggle)
 
@@ -55,23 +58,32 @@ class MainActivity : AppCompatActivity() {
             previousMenuItem=it
 
             when(it.itemId){
-                R.id.dashboard->{openDashboard()
+                R.id.dashboard ->{openDashboard()
                     draweLayout.closeDrawers()
                 }
-                R.id.favourites->{supportFragmentManager.beginTransaction()
-                    .replace(R.id.frame,FavouritesFragment())
+                R.id.favourites ->{supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.frame,
+                        FavouritesFragment()
+                    )
                     .commit()
                     supportActionBar?.title="Favourites"
                     draweLayout.closeDrawers()}
 
-                R.id.profile->{supportFragmentManager.beginTransaction()
-                    .replace(R.id.frame,profileFragment())
+                R.id.profile ->{supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.frame,
+                        profileFragment()
+                    )
                     .commit()
                     supportActionBar?.title="Profile"
                 draweLayout.closeDrawers()
                 }
-                R.id.aboutApp->{supportFragmentManager.beginTransaction()
-                    .replace(R.id.frame,AboutAppFragment())
+                R.id.aboutApp ->{supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.frame,
+                        AboutAppFragment()
+                    )
                     .commit()
                     supportActionBar?.title="About App"
                     draweLayout.closeDrawers()}
@@ -100,7 +112,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openDashboard(){
-        val fragment=DashboardFragment()
+        val fragment= DashboardFragment()
         val transaction =supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame,fragment)
         transaction.commit()
@@ -114,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
 
         when(frag){
-            !is DashboardFragment-> openDashboard()
+            !is DashboardFragment -> openDashboard()
 
             else->super.onBackPressed()
         }
